@@ -165,12 +165,33 @@ function App() {
               overflowY: "auto",
               borderLeft: "1px solid #1e293b",
             }}
-          >
+            >
             <h3 style={{ color: "#38bdf8" }}>Results</h3>
 
             {path && <p>Path: {path.join(" → ")}</p>}
             {suggestion.map(([u, c]) => <p key={u}>{u} ({c})</p>)}
             {communities.map((g, i) => <p key={i}>{g.join(", ")}</p>)}
+            {communities.length > 0 && (
+  <>
+    <h4>Community Interests</h4>
+    {communities.map((group, i) => {
+      const interests = group.map(u => userInfo[u]);
+      const freq = {};
+
+      interests.forEach(int => {
+        freq[int] = (freq[int] || 0) + 1;
+      });
+
+      const top = Object.entries(freq).sort((a, b) => b[1] - a[1])[0];
+
+      return (
+        <p key={i}>
+          Group {i + 1}: {top ? top[0] : "N/A"}
+        </p>
+      );
+    })}
+  </>
+)}
             {influencer && <p>{influencer[0]} ({influencer[1]})</p>}
           </div>
 
