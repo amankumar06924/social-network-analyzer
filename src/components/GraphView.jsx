@@ -79,7 +79,9 @@ for (let u in graph) {
 
         // 🔥 CUSTOM NODE DRAW (ADDED)
         nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node.id;
+        const interest = userInfo[node.id] || "";
+const label = interest ? `${node.id} (${interest})` : node.id;
+//idk
           const fontSize = 12 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
 
